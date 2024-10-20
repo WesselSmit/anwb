@@ -1,0 +1,22 @@
+main {
+  block-size: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background: var(--color-background);
+}
+
+.coverage-advisor {
+  max-inline-size: min(90%, 600px);
+  padding: var(--spacing-m);
+  background: var(--color-background-surface);
+  border-radius: var(--border-radius-m);
+}
+
+.recommendation {
+  margin-block-start: var(--spacing-m);
+}
+
+.result {
+  font-weight: var(--font-weight-bold);
+}

@@ -1,4 +1,5 @@
 @layer base;
 @layer typography;
+@layer form;
 
 /* all styles that are not in a layer will be more specific than the styles in the layers */

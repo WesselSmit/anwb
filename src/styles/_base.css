@@ -6,7 +6,7 @@ html {
 
 body {
   overflow-x: hidden;
-  min-height: 100vh;
+  min-block-size: 100vh;
   background-color: var(--color-background);
   color: var(--color-text);
 
@@ -19,10 +19,36 @@ body {
   line-height: 1.5;
 }
 
+#root,
+main {
+  min-block-size: 100vh;
+}
+
 img,
 picture {
   display: block;
-  max-width: 100%;
+  max-inline-size: 100%;
+}
+
+button {
+  padding: var(--spacing-xs) var(--spacing-s);
+  color: var(--color-text-action);
+  background-color: var(--color-button);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-s);
+  cursor: pointer;
+  transition: all 300ms ease-out;
+}
+
+button:disabled {
+  background-color: var(--color-button-disabled);
+  color: var(--color-text-action-disabled);
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover,
+button:not(:disabled):focus {
+  scale: 1.05;
 }
 
 @media (prefers-reduced-motion: reduce) {
