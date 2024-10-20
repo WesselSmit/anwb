@@ -1,6 +1,6 @@
 // NOTE: this logic has been separated into its file to illustrate that the matrixes could easily be managed elsewhere if needed (e.g. managed by editors in a CMS, types can be generated using a tool like Zod) or it can be it's own JS/TS/JSON file in the codebase (like it is now).
 
-import messages from '../static/messages.json';
+import messages from '../data/messages.json';
 
 const ADVICE = {
   TEMPORARY_COVERAGE: messages.temporary_coverage,

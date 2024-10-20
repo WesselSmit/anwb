@@ -3,9 +3,7 @@
   font-family: Poppins;
   font-style: normal;
   font-weight: 600;
-  src:
-    url('@/assets/fonts/Poppins-SemiBold.woff2') format('woff2'),
-    url('@/assets/fonts/Poppins-SemiBold.woff') format('woff');
+  src: url('@/assets/fonts/Poppins-SemiBold.woff2') format('woff2');
 
   /*
     Subset loaded fonts by specifiying which characters from the font file should be loaded.
@@ -22,9 +20,7 @@
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  src:
-    url('@/assets/fonts/Poppins-Medium.woff2') format('woff2'),
-    url('@/assets/fonts/Poppins-Medium.woff') format('woff');
+  src: url('@/assets/fonts/Poppins-Medium.woff2') format('woff2');
 
   /*
     Subset loaded fonts by specifiying which characters from the font file should be loaded.

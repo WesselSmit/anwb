@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { getAdvice } from './lib/advisor'
-import messages from './static/messages.json'
+import messages from './data/messages.json'
 
 export default function App() {
   const [result, setResult] = useState('')
