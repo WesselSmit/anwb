@@ -1,50 +1,148 @@
-# React + TypeScript + Vite
+# ANWB Case
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small tool to help users calculate the cheapest plan options when adjusting their continuous travel insurance.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To install this application follow these steps in the CLI:
 
-## Expanding the ESLint configuration
+1. Clone this repository
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```sh
+$ git clone https://github.com/WesselSmit/anwb-case.git
+```
 
-- Configure the top-level `parserOptions` property like this:
+2. Navigate to the local folder root
 
+```sh
+$ cd anwb-case
+```
+
+3. Install the dependencies
+
+```sh
+$ npm install
+```
+
+4. Run the application
+
+```sh
+$ npm run start
+```
+
+## Testing
+
+The codebase currently only has unit tests which use vitest.
+Only lib functions are currently tested. This because they are likely to change and are critical to the project. Testing UI components seems less critical (there aren't really any UI components yet).
+
+### Using tests
+
+To run the unit test suite, run:
+
+```sh
+$ npm run test:unit
+```
+
+I tried to focus on testing whether the getAdvice function actually returns the correct advice in various contexts and with different parameters. For this I set up mocks to mock the actual matrix that is being used, this becuase it might change over time and we do not want to update our test files only because a value has been changed (and/or maybe the matrix is even managed by another source; keep the tests pure).
+
+Besides testing whether the correct values are returned, its also important to test the error handling seeing as this function depends on user input.
+
+## Decisions and thought processes
+
+### Mindset
+
+I tried to keep things simple and ready to be expanded if necessary, but on the other hand I want to show that I like to work modular and reusabiliy is ofcourse also very important.
+
+If this was a production ready app, we would use components, but for the scope of this case there was nothing I could really reuse. So nothing has been setup to be a component currently.
+
+I am not one to quickly reach for packages because it introduces a lot of possible problems and responsability in the long term. The only dependencies I added, besides what Vite uses out-of-the-box, is `vitest` for testing.
+
+Form inputs are now controlled, normally I would say that using uncontrolled inputs would've worked here as well. But the case stated that controlled inputs should be used. This has the added benefit (but also the large task of) managing errors manually which can offer more detailed/visually appealing errors.
+
+I tried to implement all the necessary accessibility tricks to give the end user a nice experience and make sure as many people as possible can use the app.
+
+### Business logig
+
+For this case I received 2 tables with different combinations, they are likely to change over time and should thus be easy to adjust.
+
+There are multiple ways you can interpret this statement. Either the values in the tables can change and/or the tables themselves can change (e.g. more parameters/conditions).
+
+> I based my design around the assumption that only the values are likely to change. If more than the values changes, some modifications would need to be made to the business logic.
+
+The easiest way to implement is a bunch of if/else statements, but this does not scale, is hard to grasp, prone to errors and will be a pain in the ass to maintain. So I tried to find other ways to approach the problem.
+
+I went with a 'matrix' which is essentially a table created with arrays. I chose this approach becuase:
+- it's easy to change; it does not take up a lot of (mental) space and is easy to understand for developers.
+- the values can be easily updated/swapped, without duplication. This makes it less prone to errors.
+
+If the matrix values need to be updated in other ways than foreseen, you'd need a more advanced API around the matrix and other solutions might be more viable options. But with the correct parameters, those options would be overkill.
+
+> I separated the rules-matrix into its own file, to illustrate it could also be provided by a 3rd party/outside source.
+
+I think a more visual editor would be a great way to manage decision trees like these. It offers a better overview and this makes it possible to manage it outside of the codebase, which would mean no developer would be necessary to make (small) changes to the decision tree. Visual editors could easily output a matrix like this.
+
+<details>
+<summary>Other alternatives I considered:</summary>
+
+#### If/else statements
+Hard to read and error prone.
 ```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
+function getAdviceTraditional(numberOfPeople, duration, isEU) {
+  if (isEU) {
+    if (numberOfPeople === 1) {
+      if (duration <= 13) {
+        return 'tijdelijke dekking afsluiten';
+      } else {
+        return 'dekking op huidige verzekering wijzigen';
+      }
+    } else if (numberOfPeople === 2) {
+      // ...
+    }
+  } else {
+    // ...
+  }
+}
+```
+#### Decision trees
+More verbose and overkill when using simple conditions.
+```js
+const decisionTree = {
+  EU: {
+    1: {
+      condition: (days) => days <= 13,
+      trueResult: 'tijdelijke dekking afsluiten',
+      falseResult: 'dekking op huidige verzekering wijzigen'
     },
+    2: {
+      // ...
+    }
   },
-})
+  NON_EU: {
+    // ...
+  }
+};
+
+function getAdviceTree({ numberOfPeople, duration, isEU }) {
+  const region = isEU ? 'EU' : 'NON_EU';
+  const rule = decisionTree[region][numberOfPeople];
+  return rule.condition(duration) ? rule.trueResult : rule.falseResult;
+}
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+</details>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Managing content
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+This is a proof of concept and not a production app. For a production grade app I would use a CMS or some other way to manage the content (and rules-matrix).
+
+For the proof of concept I have separated the messages/copy into its own file (`src/data/messages.json`). In a production app this would be fetched/dumped pre build and imported at runtime. For now, its hardcoded.
+
+These messages have types thanks to `src/types/global.d.ts`. In a production ready app, these would be generated pre build using a tool like Swagger.
+
+### Expanding the app
+
+Further ideas to improve the app would be:
+- improve the test setup, e.g. run tests on each commit/PR and prevent committing/merging if a test fails (e.g. github actions)
+- implembent more tests/different kinds of testing (e.g. e2e)
+- implement linting/formatting on commits (can also coupled with gihub actions)
+- implement 3rd party system for managing content and/or matrix

@@ -1,4 +1,4 @@
-// NOTE: in a real app the translations file would be fetched from a 3rd party and you would generate the types (e.g. eusing something like Zod)
+// NOTE: in a real app the translations file would be fetched from a 3rd party and you would generate the types (e.g. eusing something like Swagger)
 declare module 'messages.json' {
   const value: Messages;
   export default value;
