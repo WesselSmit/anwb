@@ -1,0 +1,9 @@
+:root {
+  --font-family: poppins, -apple-system, blinkmacsystemfont, 'Roboto',
+    'Helvetica Neue', sans-serif;
+  --font-weight-body: 500;
+  --font-weight-bold: 600;
+
+  --color-background: #fff;
+  --color-text: #000;
+}
