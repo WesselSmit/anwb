@@ -29,3 +29,7 @@ h6,
 .h6 {
   font-weight: var(--font-weight-bold);
 }
+
+.error {
+  color: var(--color-text-invalid);
+}

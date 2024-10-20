@@ -1,0 +1,6 @@
+{
+  "temporary_coverage": "tijdelijke dekking afsluiten",
+  "modify_current": "dekking op huidige verzekering wijzigen",
+  "error_number_of_people": "Aantal mensen moet tussen 1 en 4 zijn.",
+  "error_number_of_days": "Aantal dagen moet minimaal 1 zijn."
+}

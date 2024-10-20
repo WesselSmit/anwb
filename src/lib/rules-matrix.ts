@@ -1,8 +1,10 @@
-// NOTE: this logic has been separated into its file to illustrate that the matrixes could easily be managed elsewhere if needed (e.g. managed by editors in a CMS, types can be generated using a tool like Zod) or it can be it's own JS/TS/JSON file in the codebase.
+// NOTE: this logic has been separated into its file to illustrate that the matrixes could easily be managed elsewhere if needed (e.g. managed by editors in a CMS, types can be generated using a tool like Zod) or it can be it's own JS/TS/JSON file in the codebase (like it is now).
+
+import messages from '../static/messages.json';
 
 const ADVICE = {
-  TEMPORARY_COVERAGE: 'tijdelijke dekking afsluiten',
-  MODIFY_CURRENT: 'dekking op huidige verzekering wijzigen'
+  TEMPORARY_COVERAGE: messages.temporary_coverage,
+  MODIFY_CURRENT: messages.modify_current
 } as const;
 
 export type AdviceType = typeof ADVICE[keyof typeof ADVICE];
