@@ -1,0 +1,4 @@
+.checkbox-input {
+  margin-inline-end: var(--spacing-xs);
+  cursor: pointer;
+}

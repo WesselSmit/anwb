@@ -1,0 +1,7 @@
+.form-field-error {
+  display: block;
+  margin-block-start: var(--spacing-xxs);
+  color: var(--color-text-invalid);
+  font-size: 1.4rem;
+  font-style: italic;
+}

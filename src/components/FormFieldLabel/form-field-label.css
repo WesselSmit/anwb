@@ -1,0 +1,8 @@
+.form-field-label {
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.checkbox-input + .form-field-label {
+  font-weight: var(--font-weight-body);
+}

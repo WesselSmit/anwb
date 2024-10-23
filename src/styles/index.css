@@ -5,5 +5,3 @@
 @import url('_base.css') layer(base);
 
 @import url('_typography.css') layer(typography);
-
-@import url('_form.css') layer(form);
