@@ -21,7 +21,7 @@ $ cd anwb-case
 3. Install the dependencies
 
 ```sh
-$ npm install
+$ npm install-clean
 ```
 
 4. Run the application
